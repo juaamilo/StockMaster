@@ -1,0 +1,60 @@
+/* src/index.css */
+
+/* 1. Reset Universal: Elimina márgenes y padding por defecto de TODOS los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Configuración del cuerpo de la página (Body) */
+body {
+  margin: 0;              /* Elimina el borde blanco default del navegador */
+  padding: 0;
+  width: 100%;            /* Ocupa todo el ancho disponible */
+  min-height: 100vh;      /* Altura mínima igual al alto de la pantalla */
+  overflow-x: hidden;     /* Evita que aparezca barra de scroll horizontal si algo se sale */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fuente base limpia */
+  background-color: #f9fafb; /* Color de fondo gris muy claro (igual al de tu App) */
+  -webkit-font-smoothing: antialiased; /* Mejora la nitidez de la letra en Mac */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3. Configuración del contenedor raíz de React (#root) */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+} 
+/* Navbar de navegación */
+.navbar {
+  background-color: #2c3e50;
+  padding: 0.8rem 2rem;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.navbar-links a:hover {
+  background-color: #f1c40f;
+  color: #2c3e50;
+}
