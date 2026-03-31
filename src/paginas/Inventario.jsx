@@ -4,7 +4,7 @@ import TarjetaProducto from '../componentes/TarjetaProducto'
 const Inventario = ({ listaProductos }) => {
   return (
     <div className="page-container">
-      <h1>📦 Inventario</h1>
+      <h1>📦 Inventariado</h1>
       
       <section>
         <h2 style={{ 
