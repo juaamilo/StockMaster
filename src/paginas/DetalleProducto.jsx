@@ -3,7 +3,7 @@ import React from 'react'
 const DetalleProducto = () => {
   return (
     <div className="page-container">
-      <h1>📋 Detalle del Producto</h1>
+      <h1>📋 camilo</h1>
       <p>Vista individual de producto (en desarrollo)</p>
     </div>
   )
