@@ -2,9 +2,8 @@ import React from 'react'
 
 const Home = ({ listaProductos }) => {
 
-  // Validación segura
   if (!Array.isArray(listaProductos)) {
-    return <p>Cargando productos...</p>
+    return <p>Cargando información...</p>
   }
 
   const totalProductos = listaProductos.length
@@ -18,9 +17,13 @@ const Home = ({ listaProductos }) => {
   return (
     <div className="page-container">
 
-      <h1 style={{ marginBottom: '20px' }}>🏠 Panel de Control</h1>
+      {/* 🏢 Encabezado */}
+      <h1 style={{ marginBottom: '10px' }}>🏠 Panel de Control</h1>
+      <h2 style={{ color: '#374151', marginBottom: '20px' }}>
+        Pixelpitch - Sistema de Inventario
+      </h2>
 
-      {/* 🔹 Tarjetas resumen */}
+      {/* 📊 Tarjetas */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -29,17 +32,17 @@ const Home = ({ listaProductos }) => {
       }}>
 
         <div style={cardStyle}>
-          <h4>📦 Productos</h4>
+          <h4>📦 Equipos Registrados</h4>
           <p style={numberStyle}>{totalProductos}</p>
         </div>
 
         <div style={cardStyle}>
-          <h4>⚠️ Bajo Stock</h4>
+          <h4>⚠️ Componentes Críticos</h4>
           <p style={numberStyle}>{bajoStock}</p>
         </div>
 
         <div style={cardStyle}>
-          <h4>💰 Valor Total</h4>
+          <h4>💰 Valor del Inventario</h4>
           <p style={numberStyle}>
             ${valorTotal.toLocaleString()}
           </p>
@@ -47,51 +50,23 @@ const Home = ({ listaProductos }) => {
 
       </div>
 
-      {/* 🔹 Acciones rápidas */}
-      <div style={{
-        background: '#ffffff',
-        padding: '20px',
-        borderRadius: '12px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-        marginBottom: '30px'
-      }}>
-        <h3>⚡ Acciones rápidas</h3>
+      {/* ⚡ Acciones */}
+      <div style={boxStyle}>
+        <h3>⚡ Gestión rápida</h3>
 
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-          
-          <button 
-            style={btnStyle}
-            onMouseOver={(e) => e.target.style.background = '#1e40af'}
-            onMouseOut={(e) => e.target.style.background = '#2563eb'}
-          >
-            ➕ Agregar Producto
-          </button>
-
-          <button 
-            style={btnStyle}
-            onMouseOver={(e) => e.target.style.background = '#1e40af'}
-            onMouseOut={(e) => e.target.style.background = '#2563eb'}
-          >
-            🔍 Buscar
-          </button>
-
-          <button 
-            style={btnStyle}
-            onMouseOver={(e) => e.target.style.background = '#1e40af'}
-            onMouseOut={(e) => e.target.style.background = '#2563eb'}
-          >
-            📦 Inventario
-          </button>
-
+          <button style={btnStyle}>➕ Registrar equipo</button>
+          <button style={btnStyle}>🔍 Buscar componente</button>
+          <button style={btnStyle}>📦 Ver inventario</button>
         </div>
       </div>
 
-      {/* 🔹 Últimos productos */}
+      {/* 🆕 Últimos registros */}
       <div>
-        <h3>🆕 Últimos productos</h3>
+        <h3>🆕 Últimos registros</h3>
 
         {totalProductos === 0 ? (
-          <p>No hay productos registrados aún.</p>
+          <p>No hay equipos registrados aún.</p>
         ) : (
           <ul style={{ paddingLeft: '20px' }}>
             {listaProductos.slice(0, 5).map((p, i) => (
@@ -103,11 +78,17 @@ const Home = ({ listaProductos }) => {
         )}
       </div>
 
+      {/* 📌 Descripción del sistema */}
+      <div style={{ marginTop: '30px', fontSize: '0.9rem', color: '#6b7280' }}>
+        Sistema diseñado para la gestión de inventario de pantallas LED,
+        facilitando el control de componentes, mantenimiento y operaciones de Pixelpitch.
+      </div>
+
     </div>
   )
 }
 
-/* 🎨 Estilos */
+/* 🎨 estilos */
 const cardStyle = {
   background: '#ffffff',
   padding: '20px',
@@ -120,6 +101,14 @@ const numberStyle = {
   fontSize: '2rem',
   fontWeight: 'bold',
   marginTop: '10px'
+}
+
+const boxStyle = {
+  background: '#ffffff',
+  padding: '20px',
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  marginBottom: '30px'
 }
 
 const btnStyle = {
