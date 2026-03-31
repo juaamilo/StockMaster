@@ -3,7 +3,7 @@ import React from 'react'
 const Home = ({ listaProductos }) => {
   return (
     <div className="page-container">
-      <h1>🏠 Panel de Control</h1>
+      <h1>🏠 Panel de Control holi </h1>
       
       <div style={{ 
         background: '#ffffff', 
