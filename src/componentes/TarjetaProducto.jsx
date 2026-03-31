@@ -1,34 +1,36 @@
-//en esta parte vemos el front para react y como se va a mostrar cada producto en el inventario, con su nombre, categoria, stock y precio   
-function TarjetaProducto({ producto }) {
-  const formatoPrecio = new Intl.NumberFormat('es-CO', {
-  style: 'currency',
-  currency: 'COP',
-  minimumFractionDigits: 0
-});
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const TarjetaProducto = ({ producto }) => {
   return (
     <li style={{ 
-      background: '#ffffff', 
-      margin: '10px 0', 
-      padding: '20px', 
-      borderRadius: '8px',
-      borderLeft: '6px solid #2563eb', // Borde azul a la izquierda
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)', // Sombra suave
-      fontFamily: 'Arial, sans-serif',
-      listStyle: 'none' // Quita el punto de la lista por seguridad
+      background: '#ffffff',
+      marginBottom: '15px',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '15px',
+      borderLeft: '5px solid #3b82f6'
     }}>
-      
-      {/* Fila Superior: Nombre y Categoría */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-        <h3 style={{ margin: 0, color: '#1f2937', fontSize: '1.2rem' }}>
+      <div>
+        <h3 style={{ margin: '0 0 10px 0', color: '#1f2937' }}>
           {producto.nombre}
         </h3>
-        
-        {/* Etiqueta de Categoría */}
-        <span style={{ 
-          background: '#e0e7ff', 
-          color: '#3730a3',
-          padding: '4px 10px', 
-          borderRadius: '20px', 
+        <p style={{ margin: '5px 0', color: '#6b7280' }}>
+          <strong>Stock:</strong> {producto.stock} unidades
+        </p>
+        <p style={{ margin: '5px 0', color: '#6b7280' }}>
+          <strong>Precio:</strong> ${producto.precio.toLocaleString('es-CO')} COP
+        </p>
+        <span style={{
+          background: producto.stock < 10 ? '#fee2e2' : '#dbeafe',
+          color: producto.stock < 10 ? '#dc2626' : '#1e40af',
+          padding: '5px 12px',
+          borderRadius: '15px',
           fontSize: '0.85rem',
           fontWeight: 'bold'
         }}>
@@ -36,38 +38,23 @@ function TarjetaProducto({ producto }) {
         </span>
       </div>
       
-      {/* Fila Inferior: Stock y Precio */}
-  <div style={{ display: 'flex', gap: '30px', borderTop: '1px solid #f3f4f6', paddingTop: '15px', flexWrap: 'wrap' }}>
-        
-        {/* Bloque de Stock */}
-        <div>
-          <span style={{ display: 'block', fontSize: '0.8rem', color: '#6b7280', marginBottom: '4px' }}>
-            Stock Disponible
-          </span>
-          <strong style={{ 
-            fontSize: '1.2rem', 
-            color: producto.stock < 10 ? '#dc2626' : '#059669' // Rojo si es poco, verde si hay mucho
-          }}>
-            {producto.stock} 
-          </strong>
-          {producto.stock < 10 && (
-            <span style={{ display: 'block', fontSize: '0.7rem', color: '#dc2626', marginTop: '2px' }}>
-              ¡Reponer pronto!
-            </span>
-          )}
-        </div>
-
-        {/* Bloque de Precio */}
-        <div>
-          <span style={{ display: 'block', fontSize: '0.8rem', color: '#6b7280', marginBottom: '4px' }}>
-            Precio Unitario
-          </span>
-          <strong style={{ fontSize: '1.2rem', color: '#1f2937' }}> ${producto.precio.toFixed(3)}
-          </strong>
-        </div>
-      </div>
+      {/* Botón para ver detalle */}
+      <Link 
+        to={`/producto/${producto.id}`}
+        style={{
+          background: '#3b82f6',
+          color: 'white',
+          padding: '10px 20px',
+          borderRadius: '8px',
+          textDecoration: 'none',
+          fontWeight: '500',
+          transition: 'background 0.3s'
+        }}
+      >
+        📋 Ver Detalle
+      </Link>
     </li>
-  );
+  )
 }
 
-export default TarjetaProducto;
+export default TarjetaProducto
