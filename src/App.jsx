@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  IMPORTS
 // ─────────────────────────────────────────────────────────────
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './componentes/Navbar';
 import FormularioProducto from './componentes/FormularioProducto';
@@ -19,8 +19,38 @@ import DetalleProducto from './paginas/DetalleProducto';
 // ─────────────────────────────────────────────────────────────
 function App() {
   const [listaProductos, setListaProductos] = useState(inventarioInicial);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Cargar productos desde la API json-server cuando el componente se monta
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
+  const cargarProductos = async () => {
+    try {
+      setCargando(true);
+      const respuesta = await fetch('http://localhost:3001/Articulos');
+      
+      if (!respuesta.ok) {
+        throw new Error('Error al cargar los productos');
+      }
+      
+      const datos = await respuesta.json();
+      setListaProductos(datos);
+      setError(null);
+    } catch (err) {
+      console.error('Error:', err);
+      setError(err.message);
+      // Si hay error en la API, usar datos iniciales
+      setListaProductos(inventarioInicial);
+    } finally {
+      setCargando(false);
+    }
+  };
 
   const agregarProducto = (productoNuevo) => {
+    // Agregar el nuevo producto a la lista
     setListaProductos([...listaProductos, productoNuevo]);
   };
 
@@ -62,12 +92,39 @@ function App() {
         
         {/* RUTAS DE LAS PÁGINAS */}
         <main>
-          <Routes>
-            <Route path="/" element={<Home listaProductos={listaProductos} />} />
-            <Route path="/inventario" element={<Inventario listaProductos={listaProductos} />} />
-            <Route path="/nuevo" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
-            <Route path="/producto/:id" element={<DetalleProducto />} />
-          </Routes>
+          {cargando && (
+            <div style={{
+              textAlign: 'center',
+              padding: '40px',
+              color: '#6b7280',
+              fontSize: '1.1rem'
+            }}>
+              ⏳ Cargando productos...
+            </div>
+          )}
+          
+          {error && (
+            <div style={{
+              background: '#fee2e2',
+              border: '1px solid #fca5a5',
+              color: '#991b1b',
+              padding: '15px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              textAlign: 'center'
+            }}>
+              ⚠️ Error: {error} - Usando datos locales
+            </div>
+          )}
+          
+          {!cargando && (
+            <Routes>
+              <Route path="/" element={<Home listaProductos={listaProductos} />} />
+              <Route path="/inventario" element={<Inventario listaProductos={listaProductos} />} />
+              <Route path="/nuevo" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
+              <Route path="/producto/:id" element={<DetalleProducto />} />
+            </Routes>
+          )}
         </main>
 
         {/* FOOTER */}

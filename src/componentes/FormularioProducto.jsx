@@ -1,4 +1,4 @@
-//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con el componente padre (App.jsx) para actualizar el inventario.
+//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API json-server para guardar los datos.
 import { useState } from 'react';
 function FormularioProducto({ onAgregarProducto }) {
   // Estado local para guardar lo que el usuario escribe en cada campo
@@ -8,6 +8,9 @@ function FormularioProducto({ onAgregarProducto }) {
     stock: '',
     precio: ''
   });
+  
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState(null);
 
   // Función que se activa cada vez que escribes en un input
   const manejarCambio = (evento) => {
@@ -16,37 +19,66 @@ function FormularioProducto({ onAgregarProducto }) {
       ...nuevoProducto,  // Mantiene los otros campos
       [name]: value      // Actualiza solo el campo que cambiaste
     });
+    setError(null); // Limpiar errores cuando el usuario escribe
   };
 
   // Función que se activa al enviar el formulario
-  const manejarEnvio = (evento) => {
+  const manejarEnvio = async (evento) => {
     evento.preventDefault(); // Evita que la página se recargue
 
     // Validar que todos los campos tengan datos
     if (!nuevoProducto.nombre || !nuevoProducto.precio) {
-      alert('Por favor completa al menos el nombre y el precio');
+      setError('Por favor completa al menos el nombre y el precio');
       return;
     }
 
     // Crear el objeto producto con los datos del formulario
     const productoParaAgregar = {
-      id: Date.now(), // Genera un ID único basado en la fecha actual
       nombre: nuevoProducto.nombre,
       categoria: nuevoProducto.categoria || 'General',
       stock: Number(nuevoProducto.stock) || 0,
       precio: Number(nuevoProducto.precio) || 0
     };
 
-    // Enviar el producto al componente padre (App.jsx)
-    onAgregarProducto(productoParaAgregar);
+    setCargando(true);
+    setError(null);
 
-    // Limpiar el formulario
-    setNuevoProducto({
-      nombre: '',
-      categoria: '',
-      stock: '',
-      precio: ''
-    });
+    try {
+      // Enviar el producto a la API json-server
+      const respuesta = await fetch('http://localhost:3001/Articulos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productoParaAgregar),
+      });
+
+      if (!respuesta.ok) {
+        throw new Error('Error al guardar el producto');
+      }
+
+      const productoGuardado = await respuesta.json();
+
+      // Notificar al componente padre
+      if (onAgregarProducto) {
+        onAgregarProducto(productoGuardado);
+      }
+
+      // Limpiar el formulario
+      setNuevoProducto({
+        nombre: '',
+        categoria: '',
+        stock: '',
+        precio: ''
+      });
+
+      alert('✅ Producto guardado exitosamente');
+    } catch (err) {
+      setError('Error al guardar el producto: ' + err.message);
+      console.error('Error:', err);
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
@@ -61,6 +93,20 @@ function FormularioProducto({ onAgregarProducto }) {
       <h2 style={{ margin: '0 0 20px 0', color: '#1e3a8a', fontSize: '1.5rem' }}>
         ➕ Agregar Nuevo Producto
       </h2>
+
+      {/* Mostrar mensaje de error si existe */}
+      {error && (
+        <div style={{
+          background: '#fee2e2',
+          border: '1px solid #fca5a5',
+          color: '#991b1b',
+          padding: '12px',
+          borderRadius: '6px',
+          marginBottom: '15px'
+        }}>
+          ❌ {error}
+        </div>
+      )}
 
       <form onSubmit={manejarEnvio}>
         <div style={{
@@ -158,23 +204,25 @@ function FormularioProducto({ onAgregarProducto }) {
         {/* Botón de Guardar */}
         <button
           type="submit"
+          disabled={cargando}
           style={{
             marginTop: '20px',
-            background: '#2563eb',
+            background: cargando ? '#9ca3af' : '#2563eb',
             color: 'white',
             padding: '12px 30px',
             borderRadius: '8px',
             border: 'none',
             fontSize: '1rem',
             fontWeight: 'bold',
-            cursor: 'pointer',
+            cursor: cargando ? 'not-allowed' : 'pointer',
             width: '100%',
-            transition: 'background 0.3s'
+            transition: 'background 0.3s',
+            opacity: cargando ? 0.7 : 1
           }}
-          onMouseOver={(e) => e.target.style.background = '#1d4ed8'}
-          onMouseOut={(e) => e.target.style.background = '#2563eb'}
+          onMouseOver={(e) => !cargando && (e.target.style.background = '#1d4ed8')}
+          onMouseOut={(e) => !cargando && (e.target.style.background = '#2563eb')}
         >
-          💾 Guardar Producto
+          {cargando ? '⏳ Guardando...' : '💾 Guardar Producto'}
         </button>
       </form>
     </div>
