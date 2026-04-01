@@ -1,9 +1,34 @@
 {
-    "usuarios": [
+    "Articulos": [
         {
             "id": 1,
-            "nombre": "Juan Pérez",
-            "email": "juan.perez@example.com"
+            "nombre": "Articulo 1",
+            "precio": 10.99,
+            "descripcion": "Descripción del Articulo 1"
+        },
+        {
+            "id": 2,
+            "nombre": "Articulo 2",
+            "precio": 15.49,
+            "descripcion": "Descripción del Articulo 2"
+        },
+        {
+            "id": 3,
+            "nombre": "Articulo 3",
+            "precio": 7.99,
+            "descripcion": "Descripción del Articulo 3"
+        }
+        {
+            "id": 4,
+            "nombre": "Articulo 4",
+            "precio": 12.50,
+            "descripcion": "Descripción del Articulo 4"
+        }
+        {
+            "id": 5,
+            "nombre": "Articulo 5",
+            "precio": 20.00,
+            "descripcion": "Descripción del Articulo 5"
         }
     ]
 
