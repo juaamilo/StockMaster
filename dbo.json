@@ -30,6 +30,12 @@
             "precio": 20.00,
             "descripcion": "Descripción del Articulo 5"
         }
+        {
+            "id": 6,
+            "nombre": "Articulo 6",
+            "precio": 5.75,
+            "descripcion": "Descripción del Articulo 6"
+        }
     ]
 
 }
