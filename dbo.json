@@ -27,6 +27,13 @@
       "stock": 50,
       "precio": 50000,
       "id": "zYlokScW7_c"
+    },
+    {
+      "nombre": "Pantalla",
+      "categoria": "Led",
+      "stock": 10,
+      "precio": 100000,
+      "id": "QUMgrYAe9bk"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
