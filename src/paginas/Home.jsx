@@ -59,13 +59,13 @@ const Home = ({ listaProductos }) => {
       {/* ⚠️ ALERTAS */}
       {bajoStock.length > 0 && (
         <div style={alertRed}>
-          ⚠️ {bajoStock.length} productos con stock crítico (≤ 5)
+          ⚠️ {bajoStock.length} productos con stock crítico 
         </div>
       )}
 
       {altoStock.length > 0 && (
         <div style={alertBlue}>
-          📦 {altoStock.length} productos con sobrestock (≥ 150)
+          📦 {altoStock.length} productos con sobrestock 
         </div>
       )}
 

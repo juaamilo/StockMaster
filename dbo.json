@@ -41,6 +41,20 @@
       "stock": 15,
       "precio": 600000,
       "id": "RMHOotI"
+    },
+    {
+      "nombre": "pantalla 24°",
+      "categoria": "led",
+      "stock": 4,
+      "precio": 1200000,
+      "id": "r3d4WFJ"
+    },
+    {
+      "nombre": "pantalla 27°",
+      "categoria": "led",
+      "stock": 170,
+      "precio": 2000000,
+      "id": "PHrlz6R"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
