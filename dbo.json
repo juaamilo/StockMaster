@@ -34,6 +34,13 @@
       "stock": 10,
       "precio": 100000,
       "id": "QUMgrYAe9bk"
+    },
+    {
+      "nombre": "Pantalla 55 pulgadas",
+      "categoria": "television ",
+      "stock": 15,
+      "precio": 600000,
+      "id": "RMHOotI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
