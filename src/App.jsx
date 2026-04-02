@@ -122,7 +122,7 @@ function App() {
               <Route path="/" element={<Home listaProductos={listaProductos} />} />
               <Route path="/inventario" element={<Inventario listaProductos={listaProductos} />} />
               <Route path="/nuevo" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
-              <Route path="/producto/:id" element={<DetalleProducto />} />
+              <Route path="/producto/:id" element={<DetalleProducto listaProductos={listaProductos} />} />
             </Routes>
           )}
         </main>
