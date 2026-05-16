@@ -1,11 +1,11 @@
 {
   "Articulos": [
     {
-      "id": "1",
+      "codigo": "1",
       "nombre": "Tira LED RGB 5050 1 Metro",
-      "categoria": "LEDs",
+      "precio": 45000,
       "stock": 50,
-      "precio": 45000
+      "id_categoria": ""
     },
     {
       "id": "2",
@@ -41,6 +41,63 @@
       "stock": 15,
       "precio": 600000,
       "id": "RMHOotI"
+    },
+    {
+      "nombre": "procesador hd210h",
+      "categoria": "Pantalla",
+      "stock": 2,
+      "precio": 1500000,
+      "id": "Ye-WtLB"
+    },
+    {
+      "nombre": "gabinete",
+      "categoria": "Pantalla",
+      "stock": 5,
+      "precio": 1000000,
+      "id": "msiIF4h"
+    },
+    {
+      "nombre": "cautin",
+      "categoria": "mantenimiento",
+      "stock": 3,
+      "precio": 150000,
+      "id": "T7bQpTv"
+    },
+    {
+      "nombre": "laptop",
+      "categoria": "server",
+      "stock": 2,
+      "precio": 3000000,
+      "id": "kgOGhv1"
+    },
+    {
+      "nombre": "Tarjeta hdr712",
+      "categoria": "Pantalla",
+      "stock": 10,
+      "precio": 120000,
+      "id": "aU2fZvw"
+    },
+    {
+      "nombre": "hd a4l ",
+      "categoria": "procesadores",
+      "stock": 2,
+      "precio": 1000000,
+      "id": "l3U3UnL"
+    },
+    {
+      "nombre": "hd a6l",
+      "categoria": "procesadores",
+      "stock": 1,
+      "precio": 1500000,
+      "id": "mmVlGaS"
+    },
+    {
+      "codigo": "ART-004",
+      "nombre": "tarjeta hda4l",
+      "precio": 900000,
+      "stock": 4,
+      "id_categoria": 3,
+      "id": "ccQ10wY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

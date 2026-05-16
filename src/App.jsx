@@ -18,7 +18,7 @@ import DetalleProducto from './paginas/DetalleProducto';
 //  COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────────────────────
 function App() {
-  const [listaProductos, setListaProductos] = useState(inventarioInicial);
+  const [listaProductos, setListaProductos] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
@@ -30,7 +30,7 @@ function App() {
   const cargarProductos = async () => {
     try {
       setCargando(true);
-      const respuesta = await fetch('http://localhost:3001/Articulos');
+      const respuesta = await fetch('http://localhost:3000/articulos');
       
       if (!respuesta.ok) {
         throw new Error('Error al cargar los productos');
