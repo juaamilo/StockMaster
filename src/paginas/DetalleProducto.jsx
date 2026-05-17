@@ -76,7 +76,7 @@ const DetalleProducto = ({ listaProductos }) => {
         <div style={{ display: 'grid', gap: '15px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <strong style={{ color: '#6b7280' }}>id del Producto:</strong>
-            <span>#{producto.id}</span>
+            <span>#{producto.codigo}</span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
