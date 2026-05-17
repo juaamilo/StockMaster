@@ -19,7 +19,6 @@ import DetalleProducto from './paginas/DetalleProducto';
 // ─────────────────────────────────────────────────────────────
 function App() {
   const [listaProductos, setListaProductos] = useState(null);
-  const [listaCategorias, setListaCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
@@ -53,24 +52,6 @@ function App() {
   const agregarProducto = (productoNuevo) => {
     // Agregar el nuevo producto a la lista
     setListaProductos([...listaProductos, productoNuevo]);
-  };
-
-  useEffect(() => {
-    cargarCategorias();
-  }, []);
-
-  const cargarCategorias = async () => {
-    try {
-      const respuesta = await fetch('http://localhost:3000/categorias');
-      if (!respuesta.ok) {
-        throw new Error('Error al cargar las categorías');
-      }
-      const datos = await respuesta.json();
-      setListaCategorias(datos);
-    } catch (err) {
-      console.error('Error:', err);
-      setError(err.message);
-    }
   };
 
   return (
@@ -155,7 +136,7 @@ function App() {
           borderTop: '1px solid #e5e7eb',
           paddingTop: '20px'
         }}>
-          <p>Stock Master © 2024 - Proyecto Universitario</p>
+          <p>Stock Master © 2026 - Proyecto Universitario</p>
           <p style={{ fontSize: '0.8rem', marginTop: '5px' }}>Desarrollo Frontend con React</p>
         </footer>
 
