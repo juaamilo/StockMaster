@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  IMPORTS
 // ─────────────────────────────────────────────────────────────
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './componentes/Navbar';
 import FormularioProducto from './componentes/FormularioProducto';
@@ -19,6 +19,7 @@ import DetalleProducto from './paginas/DetalleProducto';
 // ─────────────────────────────────────────────────────────────
 function App() {
   const [listaProductos, setListaProductos] = useState(null);
+  const [listaCategorias, setListaCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
@@ -31,11 +32,11 @@ function App() {
     try {
       setCargando(true);
       const respuesta = await fetch('http://localhost:3000/articulos');
-      
+
       if (!respuesta.ok) {
         throw new Error('Error al cargar los productos');
       }
-      
+
       const datos = await respuesta.json();
       setListaProductos(datos);
       setError(null);
@@ -54,32 +55,50 @@ function App() {
     setListaProductos([...listaProductos, productoNuevo]);
   };
 
+  useEffect(() => {
+    cargarCategorias();
+  }, []);
+
+  const cargarCategorias = async () => {
+    try {
+      const respuesta = await fetch('http://localhost:3000/categorias');
+      if (!respuesta.ok) {
+        throw new Error('Error al cargar las categorías');
+      }
+      const datos = await respuesta.json();
+      setListaCategorias(datos);
+    } catch (err) {
+      console.error('Error:', err);
+      setError(err.message);
+    }
+  };
+
   return (
     <BrowserRouter>
-      <div style={{ 
+      <div style={{
         padding: '40px 2%',
         width: '100vw',
         margin: '0',
         fontFamily: '"Segoe UI", Roboto, Helvetica, Arial, sans-serif',
         backgroundColor: '#f9fafb',
         minHeight: '100vh',
-        boxSizing: 'border-box'      
+        boxSizing: 'border-box'
       }}>
-        
+
         {/* HEADER */}
         <header style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h1 style={{ 
-            color: '#1e3a8a', 
-            margin: '0', 
+          <h1 style={{
+            color: '#1e3a8a',
+            margin: '0',
             fontSize: '2.5rem',
             letterSpacing: '-0.5px'
           }}>
             📦 Stock Master
           </h1>
-          
-          <p style={{ 
-            color: '#6b7280', 
-            marginTop: '15px',       
+
+          <p style={{
+            color: '#6b7280',
+            marginTop: '15px',
             fontSize: '1.2rem',
             fontWeight: '300'
           }}>
@@ -89,7 +108,7 @@ function App() {
 
         {/* NAVBAR */}
         <Navbar />
-        
+
         {/* RUTAS DE LAS PÁGINAS */}
         <main>
           {cargando && (
@@ -102,7 +121,7 @@ function App() {
               ⏳ Cargando productos...
             </div>
           )}
-          
+
           {error && (
             <div style={{
               background: '#fee2e2',
@@ -116,7 +135,7 @@ function App() {
               ⚠️ Error: {error} - Usando datos locales
             </div>
           )}
-          
+
           {!cargando && (
             <Routes>
               <Route path="/" element={<Home listaProductos={listaProductos} />} />
@@ -128,10 +147,10 @@ function App() {
         </main>
 
         {/* FOOTER */}
-        <footer style={{ 
-          marginTop: '60px', 
-          textAlign: 'center', 
-          color: '#9ca3af', 
+        <footer style={{
+          marginTop: '60px',
+          textAlign: 'center',
+          color: '#9ca3af',
           fontSize: '0.9rem',
           borderTop: '1px solid #e5e7eb',
           paddingTop: '20px'

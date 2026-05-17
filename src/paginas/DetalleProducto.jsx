@@ -7,6 +7,7 @@ const DetalleProducto = ({ listaProductos }) => {
   
   // Busca el producto convirtiendo ambos a STRING
   const producto = listaProductos?.find(p => String(p.id) === String(id))
+  
 
   // Si no encuentra el producto
   if (!producto) {
@@ -75,7 +76,7 @@ const DetalleProducto = ({ listaProductos }) => {
         <div style={{ display: 'grid', gap: '15px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <strong style={{ color: '#6b7280' }}>ID del Producto:</strong>
-            <span>#{producto.id}</span>
+            <span>#{producto.codigo}</span>
           </div>
           
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -88,7 +89,7 @@ const DetalleProducto = ({ listaProductos }) => {
               fontSize: '0.9rem',
               fontWeight: '500'
             }}>
-              {producto.categoria}
+              {producto.descripcion}
             </span>
           </div>
           
@@ -158,8 +159,8 @@ const DetalleProducto = ({ listaProductos }) => {
       if (!confirmacion) return;
 
       try {
-        // 1. Eliminar de la API (json-server)
-        const respuesta = await fetch(`http://localhost:3001/Articulos/${producto.id}`, {
+        // 1. Eliminar del backend
+        const respuesta = await fetch(`http://localhost:3000/articulos/${producto.codigo}`, {
           method: 'DELETE'
         });
 
