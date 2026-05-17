@@ -1,10 +1,11 @@
-//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API json-server para guardar los datos.
+//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para código, nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API para guardar los datos.
 import { useState } from 'react';
 function FormularioProducto({ onAgregarProducto }) {
   // Estado local para guardar lo que el usuario escribe en cada campo
   const [nuevoProducto, setNuevoProducto] = useState({
+    codigo: '',
     nombre: '',
-    categoria: '',
+    id_categoria: '',
     stock: '',
     precio: ''
   });
@@ -27,17 +28,18 @@ function FormularioProducto({ onAgregarProducto }) {
     evento.preventDefault(); // Evita que la página se recargue
 
     // Validar que todos los campos tengan datos
-    if (!nuevoProducto.nombre || !nuevoProducto.precio) {
-      setError('Por favor completa al menos el nombre y el precio');
+    if (!nuevoProducto.codigo || !nuevoProducto.nombre || !nuevoProducto.precio || !nuevoProducto.id_categoria) {
+      setError('Por favor completa todos los campos requeridos (código, nombre, precio y categoría)');
       return;
     }
 
     // Crear el objeto producto con los datos del formulario
     const productoParaAgregar = {
+      codigo: nuevoProducto.codigo,
       nombre: nuevoProducto.nombre,
-      categoria: nuevoProducto.categoria || 'General',
+      precio: Number(nuevoProducto.precio),
       stock: Number(nuevoProducto.stock) || 0,
-      precio: Number(nuevoProducto.precio) || 0
+      id_categoria: Number(nuevoProducto.id_categoria)
     };
 
     setCargando(true);
@@ -45,7 +47,7 @@ function FormularioProducto({ onAgregarProducto }) {
 
     try {
       // Enviar el producto a la API json-server
-      const respuesta = await fetch('http://localhost:3001/Articulos', {
+      const respuesta = await fetch('http://localhost:3000/Articulos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,8 +68,9 @@ function FormularioProducto({ onAgregarProducto }) {
 
       // Limpiar el formulario
       setNuevoProducto({
+        codigo: '',
         nombre: '',
-        categoria: '',
+        id_categoria: '',
         stock: '',
         precio: ''
       });
@@ -114,6 +117,28 @@ function FormularioProducto({ onAgregarProducto }) {
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '15px'
         }}>
+          {/* Campo Código */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
+              Código del Producto
+            </label>
+            <input
+              type="text"
+              name="codigo"
+              value={nuevoProducto.codigo}
+              onChange={manejarCambio}
+              placeholder="Ej: PROD001"
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                fontSize: '1rem'
+              }}
+              required
+            />
+          </div>
+
           {/* Campo Nombre */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
@@ -136,17 +161,17 @@ function FormularioProducto({ onAgregarProducto }) {
             />
           </div>
 
-          {/* Campo Categoría */}
+          {/* Campo ID Categoría */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
-              Categoría
+              ID Categoría
             </label>
             <input
-              type="text"
-              name="categoria"
-              value={nuevoProducto.categoria}
+              type="number"
+              name="id_categoria"
+              value={nuevoProducto.id_categoria}
               onChange={manejarCambio}
-              placeholder="Ej: Iluminación"
+              placeholder="Ej: 1"
               style={{
                 width: '100%',
                 padding: '10px',
@@ -154,6 +179,7 @@ function FormularioProducto({ onAgregarProducto }) {
                 border: '1px solid #d1d5db',
                 fontSize: '1rem'
               }}
+              required
             />
           </div>
 
