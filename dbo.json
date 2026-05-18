@@ -1,103 +1,128 @@
 {
   "Articulos": [
     {
-      "codigo": "1",
+      "id": 1,
+      "codigo": "ART-001",
       "nombre": "Tira LED RGB 5050 1 Metro",
       "precio": 45000,
       "stock": 50,
-      "id_categoria": ""
+      "id_categoria": 1
     },
     {
-      "id": "2",
+      "id": 2,
+      "codigo": "ART-002",
       "nombre": "Pantalla LED P10 Exterior",
       "categoria": "Pantallas",
       "stock": 12,
-      "precio": 850000
+      "precio": 850000,
+      "id_categoria": 3
     },
     {
-      "id": "3",
+      "id": 3,
+      "codigo": "ART-003",
       "nombre": "Controlador DMX 512",
       "categoria": "Repuestos",
       "stock": 25,
-      "precio": 120000
+      "precio": 120000,
+      "id_categoria": 2
     },
     {
+      "id": 4,
+      "codigo": "ART-004",
       "nombre": "Pantalla",
       "categoria": "Led",
       "stock": 50,
       "precio": 50000,
-      "id": "zYlokScW7_c"
+      "id_categoria": 3
     },
     {
+      "id": 5,
+      "codigo": "ART-005",
       "nombre": "Pantalla",
       "categoria": "Led",
       "stock": 10,
       "precio": 100000,
-      "id": "QUMgrYAe9bk"
+      "id_categoria": 3
     },
     {
+      "id": 6,
+      "codigo": "ART-006",
       "nombre": "Pantalla 55 pulgadas",
-      "categoria": "television ",
+      "categoria": "television",
       "stock": 15,
       "precio": 600000,
-      "id": "RMHOotI"
+      "id_categoria": 3
     },
     {
+      "id": 7,
+      "codigo": "ART-007",
       "nombre": "procesador hd210h",
       "categoria": "Pantalla",
       "stock": 2,
       "precio": 1500000,
-      "id": "Ye-WtLB"
+      "id_categoria": 2
     },
     {
+      "id": 8,
+      "codigo": "ART-008",
       "nombre": "gabinete",
       "categoria": "Pantalla",
       "stock": 5,
       "precio": 1000000,
-      "id": "msiIF4h"
+      "id_categoria": 2
     },
     {
+      "id": 9,
+      "codigo": "ART-009",
       "nombre": "cautin",
       "categoria": "mantenimiento",
       "stock": 3,
       "precio": 150000,
-      "id": "T7bQpTv"
+      "id_categoria": 2
     },
     {
+      "id": 10,
+      "codigo": "ART-010",
       "nombre": "laptop",
       "categoria": "server",
       "stock": 2,
       "precio": 3000000,
-      "id": "kgOGhv1"
+      "id_categoria": 1
     },
     {
+      "id": 11,
+      "codigo": "ART-011",
       "nombre": "Tarjeta hdr712",
       "categoria": "Pantalla",
       "stock": 10,
       "precio": 120000,
-      "id": "aU2fZvw"
+      "id_categoria": 2
     },
     {
-      "nombre": "hd a4l ",
+      "id": 12,
+      "codigo": "ART-012",
+      "nombre": "hd a4l",
       "categoria": "procesadores",
       "stock": 2,
       "precio": 1000000,
-      "id": "l3U3UnL"
+      "id_categoria": 2
     },
     {
+      "id": 13,
+      "codigo": "ART-013",
       "nombre": "hd a6l",
       "categoria": "procesadores",
       "stock": 1,
       "precio": 1500000,
-      "id": "mmVlGaS"
+      "id_categoria": 2
     },
     {
-      "codigo": "ART-004",
+      "id": 14,
+      "codigo": "ART-014",
       "nombre": "tarjeta hda4l",
       "precio": 900000,
       "stock": 4,
-      "id_categoria": 3,
-      "id": "ccQ10wY"
+      "id_categoria": 2
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

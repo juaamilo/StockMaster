@@ -2,11 +2,11 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const DetalleProducto = ({ listaProductos }) => {
-  const { id } = useParams()
+  const { codigo } = useParams()
   const navigate = useNavigate()
 
-  // Busca el producto convirtiendo ambos a STRING
-  const producto = listaProductos?.find(p => String(p.id) === String(id))
+  // Busca el producto por codigo
+  const producto = listaProductos?.find(p => String(p.codigo) === String(codigo))
 
 
   // Si no encuentra el producto
@@ -15,7 +15,7 @@ const DetalleProducto = ({ listaProductos }) => {
       <div className="page-container" style={{ textAlign: 'center', padding: '40px' }}>
         <h1>⚠️ Producto no encontrado</h1>
         <p style={{ color: '#6b7280', marginBottom: '20px' }}>
-          El producto con id #{id} no existe en el inventario.
+          El producto con código {codigo} no existe en el inventario.
         </p>
         <button
           onClick={() => navigate('/inventario')}
@@ -131,9 +131,7 @@ const DetalleProducto = ({ listaProductos }) => {
           {/* Botón EDITAR */}
           <button
             onClick={() => {
-              // Por ahora: mostrar alerta o navegar a formulario
-              alert(`✏️ Editar: ${producto.nombre}\n\nEsta función estará disponible pronto.`);
-              // Futuro: navigate(`/nuevo?edit=${producto.id}`)
+              navigate(`/editar/${producto.codigo}`)
             }}
             style={{
               background: '#f59e0b',
@@ -161,8 +159,8 @@ const DetalleProducto = ({ listaProductos }) => {
               if (!confirmacion) return;
 
               try {
-                // 1. Eliminar del backend
-                const respuesta = await fetch(`http://localhost:3000/articulos/${producto.id}`, {
+                // Eliminar usando el codigo
+                const respuesta = await fetch(`http://localhost:3000/articulos/${producto.codigo}`, {
                   method: 'DELETE'
                 });
 
