@@ -1,6 +1,7 @@
 //en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para código, nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API para guardar los datos.
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../servicios/api';
 
 function FormularioProducto({ onAgregarProducto, productoEditar = null, modo = 'crear' }) {
   const navigate = useNavigate();
@@ -65,11 +66,11 @@ function FormularioProducto({ onAgregarProducto, productoEditar = null, modo = '
     try {
       if (modo === 'crear') {
         // POST para crear nuevo producto
-        const respuesta = await fetch('http://localhost:3000/articulos', {
+        const respuesta = await apiFetch('/articulos', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-          },
+          },          
           body: JSON.stringify(productoParaGuardar),
         });
 
@@ -104,12 +105,12 @@ function FormularioProducto({ onAgregarProducto, productoEditar = null, modo = '
           id_categoria: Number(nuevoProducto.id_categoria)
         };
 
-        const respuesta = await fetch(`http://localhost:3000/articulos/${productoEditar.codigo}`, {
+        const respuesta = await apiFetch(`/articulos/${productoEditar.codigo}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(datosActualizar),
+        },
+        body: JSON.stringify(datosActualizar),
         });
 
         if (!respuesta.ok) {

@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  IMPORTS
 // ─────────────────────────────────────────────────────────────
+import { apiFetch } from './servicios/api';
 import { useState, useEffect, use } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './componentes/Navbar';
@@ -69,7 +70,7 @@ function App() {
   const cargarProductos = async () => {
     try {
       setCargando(true);
-      const respuesta = await fetch('http://localhost:3000/articulos');
+      const respuesta = await apiFetch('/articulos');
 
       if (!respuesta.ok) {
         throw new Error('Error al cargar los productos');
