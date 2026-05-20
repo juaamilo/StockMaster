@@ -6,6 +6,7 @@
  * headers para peticiones autorizadas.
  * 
  * Nota: Utiliza localStorage para persistir la sesión entre recargas de página.
+ * Los nombres de campos coinciden con la tabla 'Persona' del backend.
  */
 
 import axios from 'axios';
@@ -18,15 +19,15 @@ class AuthService {
     
     /**
      * Realiza el inicio de sesión enviando credenciales al backend.
-     * @param {string} username - Nombre de usuario
-     * @param {string} password - Contraseña
+     * @param {string} usuario - Nombre de usuario (coincide con BD)
+     * @param {string} contrasena - Contraseña (coincide con BD)
      * @returns {Promise<Object>} Respuesta con token y datos del usuario
      */
-    async login(username, password) {
+    async login(usuario, contrasena) {
         try {
             const response = await axios.post(`${API_URL}/auth/login`, {
-                username,
-                password
+                usuario,      // 👈 Coincide con tu columna en BD
+                contrasena    // 👈 Coincide con tu columna en BD
             });
 
             if (response.data.success) {
@@ -39,6 +40,29 @@ class AuthService {
         } catch (error) {
             // Propagar el error para que el componente UI lo maneje
             throw error.response?.data || { message: 'Error de conexión con el servidor' };
+        }
+    }
+
+    /**
+     * Registra un nuevo usuario en el backend
+     * @param {Object} data - Datos del formulario de registro
+     * @returns {Promise<Object>} Respuesta del backend
+     */
+    async register(data) {
+        try {
+            // Adaptar los nombres de campos para que coincidan con la tabla Persona
+            const payload = {
+                usuario: data.usuario,
+                contrasena: data.contrasena,
+                nombre: data.nombre,
+                direccion: data.direccion || null,
+                id_tipo: parseInt(data.id_tipo) // Asegurar que sea número entero
+            };
+
+            const response = await axios.post(`${API_URL}/auth/register`, payload);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || { message: 'Error al registrar usuario' };
         }
     }
 
