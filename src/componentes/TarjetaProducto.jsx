@@ -42,7 +42,7 @@ const TarjetaProducto = ({ producto }) => {
 
       {/* Botón para ver detalle */}
       <Link
-        to={`/producto/${producto.id}`}
+        to={`/producto/${producto.codigo}`}
         style={{
           background: '#3b82f6',
           color: 'white',

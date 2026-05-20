@@ -13,6 +13,7 @@ import Home from './paginas/Home';
 import Inventario from './paginas/Inventario';
 import NuevoProducto from './paginas/NuevoProducto';
 import DetalleProducto from './paginas/DetalleProducto';
+import EditarProducto from './paginas/EditarProducto';
 
 // ─────────────────────────────────────────────────────────────
 //  COMPONENTE PRINCIPAL
@@ -122,7 +123,8 @@ function App() {
               <Route path="/" element={<Home listaProductos={listaProductos} />} />
               <Route path="/inventario" element={<Inventario listaProductos={listaProductos} />} />
               <Route path="/nuevo" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
-              <Route path="/producto/:id" element={<DetalleProducto listaProductos={listaProductos} />} />
+              <Route path="/producto/:codigo" element={<DetalleProducto listaProductos={listaProductos} />} />
+              <Route path="/editar/:codigo" element={<EditarProducto listaProductos={listaProductos} />} />
             </Routes>
           )}
         </main>
