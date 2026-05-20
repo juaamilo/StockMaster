@@ -15,9 +15,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-  // Estados del formulario
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // Estados del formulario (Nombres actualizados para coincidir con la BD)
+  const [usuario, setUsuario] = useState('');
+  const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
   
   // Hooks de navegación y contexto
@@ -33,18 +33,18 @@ const Login = () => {
     setError('');
 
     // Validación básica antes de enviar
-    if (username.length < 3) {
+    if (usuario.length < 3) {
       setError('El usuario debe tener al menos 3 caracteres');
       return;
     }
-    if (password.length < 6) {
+    if (contrasena.length < 6) {
       setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
     try {
-      // Ejecuta el login a través del contexto (que usa authService internamente)
-      const resultado = await login(username, password);
+      // Ejecuta el login a través del contexto (envía usuario/contrasena a la BD)
+      const resultado = await login(usuario, contrasena);
       
       if (resultado.success) {
         // Redirige al inventario tras login exitoso
@@ -82,8 +82,8 @@ const Login = () => {
             <input 
               type="text" 
               placeholder="Ingresa tu usuario" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
               required
               style={inputStyle}
               autoComplete="username"
@@ -95,8 +95,8 @@ const Login = () => {
             <input 
               type="password" 
               placeholder="••••••••" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
               required
               style={inputStyle}
               autoComplete="current-password"
@@ -138,18 +138,18 @@ const containerStyle = {
 const cardStyle = {
   background: '#fff',
   padding: '30px',
-  borderRadius: '12px',        // Mismo border-radius que las tarjetas de Home
-  boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // Misma sombra suave
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
   width: '100%',
   maxWidth: '400px',
   textAlign: 'center'
 };
 
 const alertStyle = {
-  background: '#fee2e2',        // Mismo fondo rojo suave que las alertas de Home
-  color: '#991b1b',             // Mismo texto rojo oscuro
+  background: '#fee2e2',
+  color: '#991b1b',
   padding: '12px',
-  borderRadius: '8px',          // Bordes redondeados consistentes
+  borderRadius: '8px',
   marginBottom: '20px',
   border: '1px solid #fca5a5',
   fontSize: '0.9rem',
@@ -171,28 +171,21 @@ const labelStyle = {
 
 const inputStyle = {
   width: '100%',
-  padding: '10px 12px',         // Padding consistente con inputs de Home
-  borderRadius: '8px',          // Bordes redondeados
-  border: '1px solid #d1d5db',  // Borde gris suave
+  padding: '10px 12px',
+  borderRadius: '8px',
+  border: '1px solid #d1d5db',
   fontSize: '1rem',
   transition: 'border-color 0.2s',
-  boxSizing: 'border-box'       // Evita desbordamiento por padding
-};
-
-// Efecto hover/focus para inputs (se puede mejorar con CSS externo)
-const inputFocusStyle = {
-  ...inputStyle,
-  borderColor: '#3b82f6',
-  outline: 'none'
+  boxSizing: 'border-box'
 };
 
 const buttonStyle = {
   width: '100%',
   padding: '12px',
-  background: '#3b82f6',        // Azul primario del sistema
+  background: '#3b82f6',
   color: 'white',
   border: 'none',
-  borderRadius: '8px',          // Bordes redondeados consistentes
+  borderRadius: '8px',
   fontSize: '1rem',
   fontWeight: '500',
   cursor: 'pointer',
@@ -201,7 +194,7 @@ const buttonStyle = {
 };
 
 const linkStyle = {
-  color: '#2563eb',             // Azul de enlaces consistente
+  color: '#2563eb',
   textDecoration: 'none',
   fontWeight: '500'
 };
