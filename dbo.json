@@ -125,5 +125,31 @@
       "id_categoria": 2
     }
   ],
+  "personas": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "usuario": "juan123",
+      "contrasena": "password123",
+      "id_tipo": 1,
+      "direccion": "Calle Principal 123"
+    },
+    {
+      "id": 2,
+      "nombre": "María García",
+      "usuario": "maria456",
+      "contrasena": "securepass456",
+      "id_tipo": 2,
+      "direccion": "Avenida Central 456"
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos López",
+      "usuario": "carlos789",
+      "contrasena": "admin123",
+      "id_tipo": 3,
+      "direccion": "Carrera 10 #789"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
