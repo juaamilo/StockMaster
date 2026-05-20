@@ -72,7 +72,7 @@ const Inventario = ({ listaProductos }) => {
           {productosFiltrados.length > 0 ? (
             productosFiltrados.map((producto) => (
               <TarjetaProducto 
-                key={producto.id}
+                key={producto.codigo}
                 producto={producto}
               />
             ))

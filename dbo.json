@@ -1,46 +1,154 @@
 {
   "Articulos": [
     {
-      "id": "1",
+      "id": 1,
+      "codigo": "ART-001",
       "nombre": "Tira LED RGB 5050 1 Metro",
-      "categoria": "LEDs",
+      "precio": 45000,
       "stock": 50,
-      "precio": 45000
+      "id_categoria": 1
     },
     {
-      "id": "2",
+      "id": 2,
+      "codigo": "ART-002",
       "nombre": "Pantalla LED P10 Exterior",
       "categoria": "Pantallas",
       "stock": 12,
-      "precio": 850000
+      "precio": 850000,
+      "id_categoria": 3
     },
     {
-      "id": "3",
+      "id": 3,
+      "codigo": "ART-003",
       "nombre": "Controlador DMX 512",
       "categoria": "Repuestos",
       "stock": 25,
-      "precio": 120000
+      "precio": 120000,
+      "id_categoria": 2
     },
     {
+      "id": 4,
+      "codigo": "ART-004",
       "nombre": "Pantalla",
       "categoria": "Led",
       "stock": 50,
       "precio": 50000,
-      "id": "zYlokScW7_c"
+      "id_categoria": 3
     },
     {
+      "id": 5,
+      "codigo": "ART-005",
       "nombre": "Pantalla",
       "categoria": "Led",
       "stock": 10,
       "precio": 100000,
-      "id": "QUMgrYAe9bk"
+      "id_categoria": 3
     },
     {
+      "id": 6,
+      "codigo": "ART-006",
       "nombre": "Pantalla 55 pulgadas",
-      "categoria": "television ",
+      "categoria": "television",
       "stock": 15,
       "precio": 600000,
-      "id": "RMHOotI"
+      "id_categoria": 3
+    },
+    {
+      "id": 7,
+      "codigo": "ART-007",
+      "nombre": "procesador hd210h",
+      "categoria": "Pantalla",
+      "stock": 2,
+      "precio": 1500000,
+      "id_categoria": 2
+    },
+    {
+      "id": 8,
+      "codigo": "ART-008",
+      "nombre": "gabinete",
+      "categoria": "Pantalla",
+      "stock": 5,
+      "precio": 1000000,
+      "id_categoria": 2
+    },
+    {
+      "id": 9,
+      "codigo": "ART-009",
+      "nombre": "cautin",
+      "categoria": "mantenimiento",
+      "stock": 3,
+      "precio": 150000,
+      "id_categoria": 2
+    },
+    {
+      "id": 10,
+      "codigo": "ART-010",
+      "nombre": "laptop",
+      "categoria": "server",
+      "stock": 2,
+      "precio": 3000000,
+      "id_categoria": 1
+    },
+    {
+      "id": 11,
+      "codigo": "ART-011",
+      "nombre": "Tarjeta hdr712",
+      "categoria": "Pantalla",
+      "stock": 10,
+      "precio": 120000,
+      "id_categoria": 2
+    },
+    {
+      "id": 12,
+      "codigo": "ART-012",
+      "nombre": "hd a4l",
+      "categoria": "procesadores",
+      "stock": 2,
+      "precio": 1000000,
+      "id_categoria": 2
+    },
+    {
+      "id": 13,
+      "codigo": "ART-013",
+      "nombre": "hd a6l",
+      "categoria": "procesadores",
+      "stock": 1,
+      "precio": 1500000,
+      "id_categoria": 2
+    },
+    {
+      "id": 14,
+      "codigo": "ART-014",
+      "nombre": "tarjeta hda4l",
+      "precio": 900000,
+      "stock": 4,
+      "id_categoria": 2
+    }
+  ],
+  "personas": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "usuario": "juan123",
+      "contrasena": "password123",
+      "id_tipo": 1,
+      "direccion": "Calle Principal 123"
+    },
+    {
+      "id": 2,
+      "nombre": "María García",
+      "usuario": "maria456",
+      "contrasena": "securepass456",
+      "id_tipo": 2,
+      "direccion": "Avenida Central 456"
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos López",
+      "usuario": "carlos789",
+      "contrasena": "admin123",
+      "id_tipo": 3,
+      "direccion": "Carrera 10 #789"
     },
     {
       "nombre": "pantalla 24°",

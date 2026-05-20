@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const TarjetaProducto = ({ producto }) => {
   return (
-    <li style={{ 
+    <li style={{
       background: '#ffffff',
       marginBottom: '15px',
       padding: '20px',
@@ -34,13 +34,15 @@ const TarjetaProducto = ({ producto }) => {
           fontSize: '0.85rem',
           fontWeight: 'bold'
         }}>
-          {producto.categoria}
+          {producto.id_categoria === 1 ? 'LED' :
+            producto.id_categoria === 2 ? 'Electronica' :
+              producto.id_categoria === 3 ? 'Pantalla' : 'Otros'}
         </span>
       </div>
-      
+
       {/* Botón para ver detalle */}
-      <Link 
-        to={`/producto/${producto.id}`}
+      <Link
+        to={`/producto/${producto.codigo}`}
         style={{
           background: '#3b82f6',
           color: 'white',

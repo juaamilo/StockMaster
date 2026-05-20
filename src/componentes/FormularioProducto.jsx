@@ -1,13 +1,31 @@
-//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API json-server para guardar los datos.
-import { useState } from 'react';
-function FormularioProducto({ onAgregarProducto }) {
+//en esta parte vemos el formulario para agregar nuevos productos al inventario, con campos para código, nombre, categoría, stock y precio, y un botón para guardar el producto. El formulario se comunica con la API para guardar los datos.
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function FormularioProducto({ onAgregarProducto, productoEditar = null, modo = 'crear' }) {
+  const navigate = useNavigate();
+  
   // Estado local para guardar lo que el usuario escribe en cada campo
   const [nuevoProducto, setNuevoProducto] = useState({
+    codigo: '',
     nombre: '',
-    categoria: '',
+    id_categoria: '',
     stock: '',
     precio: ''
   });
+
+  // Si estamos editando, pre-llenar el formulario
+  useEffect(() => {
+    if (modo === 'editar' && productoEditar) {
+      setNuevoProducto({
+        codigo: productoEditar.codigo || '',
+        nombre: productoEditar.nombre || '',
+        id_categoria: productoEditar.id_categoria || '',
+        stock: productoEditar.stock || '',
+        precio: productoEditar.precio || ''
+      });
+    }
+  }, [modo, productoEditar]);
   
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState(null);
@@ -27,54 +45,84 @@ function FormularioProducto({ onAgregarProducto }) {
     evento.preventDefault(); // Evita que la página se recargue
 
     // Validar que todos los campos tengan datos
-    if (!nuevoProducto.nombre || !nuevoProducto.precio) {
-      setError('Por favor completa al menos el nombre y el precio');
+    if (!nuevoProducto.codigo || !nuevoProducto.nombre || !nuevoProducto.precio || !nuevoProducto.id_categoria) {
+      setError('Por favor completa todos los campos requeridos (código, nombre, precio y categoría)');
       return;
     }
 
     // Crear el objeto producto con los datos del formulario
-    const productoParaAgregar = {
+    const productoParaGuardar = {
+      codigo: nuevoProducto.codigo,
       nombre: nuevoProducto.nombre,
-      categoria: nuevoProducto.categoria || 'General',
+      precio: Number(nuevoProducto.precio),
       stock: Number(nuevoProducto.stock) || 0,
-      precio: Number(nuevoProducto.precio) || 0
+      id_categoria: Number(nuevoProducto.id_categoria)
     };
 
     setCargando(true);
     setError(null);
 
     try {
-      // Enviar el producto a la API json-server
-      const respuesta = await fetch('http://localhost:3001/Articulos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(productoParaAgregar),
-      });
+      if (modo === 'crear') {
+        // POST para crear nuevo producto
+        const respuesta = await fetch('http://localhost:3000/articulos', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(productoParaGuardar),
+        });
 
-      if (!respuesta.ok) {
-        throw new Error('Error al guardar el producto');
+        if (!respuesta.ok) {
+          throw new Error('Error al guardar el producto');
+        }
+
+        const productoGuardado = await respuesta.json();
+
+        // Notificar al componente padre
+        if (onAgregarProducto) {
+          onAgregarProducto(productoGuardado);
+        }
+
+        // Limpiar el formulario
+        setNuevoProducto({
+          codigo: '',
+          nombre: '',
+          id_categoria: '',
+          stock: '',
+          precio: ''
+        });
+
+        alert('✅ Producto guardado exitosamente');
+      } else if (modo === 'editar') {
+        // PUT para actualizar producto existente
+        // No enviar 'codigo' en el body, solo en la URL
+        const datosActualizar = {
+          nombre: nuevoProducto.nombre,
+          precio: Number(nuevoProducto.precio),
+          stock: Number(nuevoProducto.stock) || 0,
+          id_categoria: Number(nuevoProducto.id_categoria)
+        };
+
+        const respuesta = await fetch(`http://localhost:3000/articulos/${productoEditar.codigo}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(datosActualizar),
+        });
+
+        if (!respuesta.ok) {
+          throw new Error('Error al actualizar el producto');
+        }
+
+        alert('✅ Producto actualizado exitosamente');
+        
+        // Volver a la página de detalle
+        navigate(`/producto/${nuevoProducto.codigo}`);
       }
-
-      const productoGuardado = await respuesta.json();
-
-      // Notificar al componente padre
-      if (onAgregarProducto) {
-        onAgregarProducto(productoGuardado);
-      }
-
-      // Limpiar el formulario
-      setNuevoProducto({
-        nombre: '',
-        categoria: '',
-        stock: '',
-        precio: ''
-      });
-
-      alert('✅ Producto guardado exitosamente');
     } catch (err) {
-      setError('Error al guardar el producto: ' + err.message);
+      setError(`Error al guardar el producto: ${err.message}`);
       console.error('Error:', err);
     } finally {
       setCargando(false);
@@ -91,7 +139,7 @@ function FormularioProducto({ onAgregarProducto }) {
       border: '2px solid #3b82f6'
     }}>
       <h2 style={{ margin: '0 0 20px 0', color: '#1e3a8a', fontSize: '1.5rem' }}>
-        ➕ Agregar Nuevo Producto
+        {modo === 'editar' ? '✏️ Editar Producto' : '➕ Agregar Nuevo Producto'}
       </h2>
 
       {/* Mostrar mensaje de error si existe */}
@@ -114,6 +162,28 @@ function FormularioProducto({ onAgregarProducto }) {
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '15px'
         }}>
+          {/* Campo Código */}
+          <div>
+            <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
+              Código del Producto
+            </label>
+            <input
+              type="text"
+              name="codigo"
+              value={nuevoProducto.codigo}
+              onChange={manejarCambio}
+              placeholder="Ej: PROD001"
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                fontSize: '1rem'
+              }}
+              required
+            />
+          </div>
+
           {/* Campo Nombre */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
@@ -136,17 +206,17 @@ function FormularioProducto({ onAgregarProducto }) {
             />
           </div>
 
-          {/* Campo Categoría */}
+          {/* Campo ID Categoría */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#374151' }}>
-              Categoría
+              ID Categoría
             </label>
             <input
-              type="text"
-              name="categoria"
-              value={nuevoProducto.categoria}
+              type="number"
+              name="id_categoria"
+              value={nuevoProducto.id_categoria}
               onChange={manejarCambio}
-              placeholder="Ej: Iluminación"
+              placeholder="Ej: 1"
               style={{
                 width: '100%',
                 padding: '10px',
@@ -154,6 +224,7 @@ function FormularioProducto({ onAgregarProducto }) {
                 border: '1px solid #d1d5db',
                 fontSize: '1rem'
               }}
+              required
             />
           </div>
 
@@ -222,7 +293,7 @@ function FormularioProducto({ onAgregarProducto }) {
           onMouseOver={(e) => !cargando && (e.target.style.background = '#1d4ed8')}
           onMouseOut={(e) => !cargando && (e.target.style.background = '#2563eb')}
         >
-          {cargando ? '⏳ Guardando...' : '💾 Guardar Producto'}
+          {cargando ? '⏳ Guardando...' : (modo === 'editar' ? '💾 Actualizar Producto' : '💾 Guardar Producto')}
         </button>
       </form>
     </div>
