@@ -1,0 +1,25 @@
+{
+  "name": "stock-master-backend",
+  "version": "1.0.0",
+  "description": "Backend para Stock Master con autenticación JWT",
+  "main": "server-autenticacion.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server-autenticacion.js",
+    "dev": "nodemon server-autenticacion.js",
+    "api": "json-server --watch dbo.json --port 3000"
+  },
+  "keywords": ["stock-master", "autenticacion", "jwt", "express"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.1.2",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

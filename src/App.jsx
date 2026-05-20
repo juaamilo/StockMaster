@@ -7,13 +7,16 @@ import Navbar from './componentes/Navbar';
 import FormularioProducto from './componentes/FormularioProducto';
 import TarjetaProducto from './componentes/TarjetaProducto';
 import { inventarioInicial } from './Datos/datosInventario';
+import { estaAutenticado, obtenerUsuarioActual } from './servicios/servicioAutenticacion';
 
-// Importar las 4 páginas (¡OJO! carpeta "paginas" en minúscula)
+// Importar las 5 páginas (¡OJO! carpeta "paginas" en minúscula)
 import Home from './paginas/Home';
 import Inventario from './paginas/Inventario';
 import NuevoProducto from './paginas/NuevoProducto';
 import DetalleProducto from './paginas/DetalleProducto';
 import EditarProducto from './paginas/EditarProducto';
+import PaginaLogin from './paginas/PaginaLogin';
+import PaginaRegistro from './paginas/PaginaRegistro';
 
 // ─────────────────────────────────────────────────────────────
 //  COMPONENTE PRINCIPAL
@@ -22,11 +25,46 @@ function App() {
   const [listaProductos, setListaProductos] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [usuarioActual, setUsuarioActual] = useState(null);
+  const [autenticado, setAutenticado] = useState(false);
 
-  // Cargar productos desde la API json-server cuando el componente se monta
+  // Cargar productos desde la API json-server y verificar autenticación cuando el componente se monta
   useEffect(() => {
     cargarProductos();
+    verificarAutenticacion();
   }, []);
+
+  // Escuchar cambios en el localStorage para actualizar autenticación
+  useEffect(() => {
+    const manejarCambiosStorage = () => {
+      verificarAutenticacion();
+    };
+
+    // Escuchar cambios en el storage desde otras pestañas
+    window.addEventListener('storage', manejarCambiosStorage);
+
+    // También verificar cada vez que el usuario navega (cambio de ruta)
+    const intervalo = setInterval(() => {
+      verificarAutenticacion();
+    }, 1000);
+
+    return () => {
+      window.removeEventListener('storage', manejarCambiosStorage);
+      clearInterval(intervalo);
+    };
+  }, []);
+
+  // Verificar si el usuario está autenticado
+  const verificarAutenticacion = () => {
+    if (estaAutenticado()) {
+      const usuario = obtenerUsuarioActual();
+      setUsuarioActual(usuario);
+      setAutenticado(true);
+    } else {
+      setAutenticado(false);
+      setUsuarioActual(null);
+    }
+  };
 
   const cargarProductos = async () => {
     try {
@@ -89,7 +127,7 @@ function App() {
         </header>
 
         {/* NAVBAR */}
-        <Navbar />
+        <Navbar autenticado={autenticado} usuarioActual={usuarioActual} onLogout={() => verificarAutenticacion()} />
 
         {/* RUTAS DE LAS PÁGINAS */}
         <main>
@@ -120,6 +158,8 @@ function App() {
 
           {!cargando && (
             <Routes>
+              <Route path="/login" element={<PaginaLogin />} />
+              <Route path="/registro" element={<PaginaRegistro />} />
               <Route path="/" element={<Home listaProductos={listaProductos} />} />
               <Route path="/inventario" element={<Inventario listaProductos={listaProductos} />} />
               <Route path="/nuevo" element={<NuevoProducto onAgregarProducto={agregarProducto} />} />
